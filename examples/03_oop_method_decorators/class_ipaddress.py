@@ -1,5 +1,3 @@
-import ipaddress
-
 
 ## Стандартный вариант применения property без setter
 class IPAddress:
