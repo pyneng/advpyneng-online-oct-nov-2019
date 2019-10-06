@@ -39,7 +39,7 @@ class Book:
             raise TypeError('Значение должно быть числом')
         if not value >= 0:
             raise ValueError('Значение должно быть положительным')
-        self._mask = float(value)
+        self._price = float(value)
 
 
 # Декораторы с явным getter
@@ -72,7 +72,7 @@ class Book:
             raise TypeError('Значение должно быть числом')
         if not value >= 0:
             raise ValueError('Значение должно быть положительным')
-        self._mask = float(value)
+        self._price = float(value)
 
 
 # property без декораторов
@@ -95,7 +95,7 @@ class Book:
             raise TypeError('Значение должно быть числом')
         if not value >= 0:
             raise ValueError('Значение должно быть положительным')
-        self._mask = float(value)
+        self._price = float(value)
 
     total = property(_get_total)
     price = property(_get_price, _set_price)
@@ -121,7 +121,7 @@ class Book:
             raise TypeError('Значение должно быть числом')
         if not value >= 0:
             raise ValueError('Значение должно быть положительным')
-        self._mask = float(value)
+        self._price = float(value)
 
     total = property()
     total = total.getter(_get_total)
