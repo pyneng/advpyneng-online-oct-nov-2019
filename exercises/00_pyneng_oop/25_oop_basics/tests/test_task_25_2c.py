@@ -34,6 +34,6 @@ def test_class(first_router_from_devices_yaml, capsys):
     # команда с ошибкой strict=True
     with pytest.raises(ValueError) as excinfo:
         return_value = r1.send_config_commands(command_with_error, strict=True)
-    assert error in str(excinfo),\
+    assert error in str(excinfo.value),\
             "Метод send_config_commands должен генерировать исключение, когда strict=True"
 
