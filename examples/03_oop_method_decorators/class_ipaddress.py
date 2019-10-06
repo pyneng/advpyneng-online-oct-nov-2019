@@ -7,6 +7,7 @@ class IPAddress:
         self._ip = ip
         self._mask = mask
 
+    # метод, который декорирован property становится getter'ом
     @property
     def mask(self):
         print('getter')
@@ -76,4 +77,30 @@ class IPAddress:
         self._mask = value
 
     mask = property(get_mask, set_mask)
+
+# property без декораторов ver 2
+class IPAddress:
+    def __init__(self, ip, mask):
+        self._ip = ip
+        self._mask = mask
+
+    def get_mask(self):
+        print('getter')
+        return self._mask
+
+    def set_mask(self, value):
+        print('setter')
+        if not isinstance(value, int):
+            raise TypeError('Значение должно быть числом')
+        if not 8 <= value <= 32:
+            raise ValueError('Значение должно быть в диапазоне 8 - 32')
+        self._mask = value
+
+    # создаем пустую property
+    mask = property()
+
+    # указываем getter
+    mask = mask.getter(get_mask)
+    # указываем setter
+    mask = mask.setter(set_mask)
 
