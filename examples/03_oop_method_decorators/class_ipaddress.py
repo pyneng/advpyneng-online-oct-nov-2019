@@ -4,7 +4,6 @@ import ipaddress
 ## Стандартный вариант применения property без setter
 class IPAddress:
     def __init__(self, ip, mask):
-        print('###############__init__')
         self._ip = ip
         self._mask = mask
 
@@ -16,11 +15,10 @@ class IPAddress:
 ## Стандартный вариант применения property с setter
 class IPAddress:
     def __init__(self, ip, mask):
-        print('###############__init__')
         self._ip = ip
         self._mask = mask
 
-    @property
+    @property # этот метод превращается в getter
     def mask(self):
         print('getter')
         return self._mask
@@ -37,7 +35,6 @@ class IPAddress:
 # Декораторы с явным setter
 class IPAddress:
     def __init__(self, ip, mask):
-        print('###############__init__')
         self._ip = ip
         self._mask = mask
 
@@ -63,7 +60,6 @@ class IPAddress:
 # property без декораторов
 class IPAddress:
     def __init__(self, ip, mask):
-        print('###############__init__')
         self._ip = ip
         self._mask = mask
 
@@ -80,3 +76,4 @@ class IPAddress:
         self._mask = value
 
     mask = property(get_mask, set_mask)
+
