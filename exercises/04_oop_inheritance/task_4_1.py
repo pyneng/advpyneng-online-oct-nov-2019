@@ -35,4 +35,6 @@ In [4]: r1.send_config_commands(['interface loop77', 'ip address 107.7.7.7 255.2
 Out[4]: 'conf t\r\nEnter configuration commands, one per line.  End with CNTL/Z.\r\nR1(config)#interface loop77\r\nR1(config-if)#ip address 107.7.7.7 255.255.255.255\r\nR1(config-if)#end\r\nR1#'
 
 
+Тест берет значения из файла devices.yaml, поэтому если
+для заданий используются другие адреса/логины, надо заменить их там.
 '''

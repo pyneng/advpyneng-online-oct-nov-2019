@@ -61,4 +61,3 @@ R1(config)#sh i
 # списки команд с ошибками и без:
 config_commands_errors = ['logging 0255.255.1', 'logging', 'sh i']
 correct_config_commands = ['logging buffered 20010', 'ip http server']
-
