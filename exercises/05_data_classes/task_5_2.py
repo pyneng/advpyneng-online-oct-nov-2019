@@ -22,8 +22,8 @@ In [11]: isinstance(ip2, IPAddress)
 Out[11]: True
 
 '''
-
-from dataclasses import dataclass
+import ipaddress
+from dataclasses import dataclass, field
 
 
 @dataclass(order=True)
@@ -34,3 +34,4 @@ class IPAddress:
 
     def __post_init__(self):
         self._ip = int(ipaddress.ip_address(self.ip))
+

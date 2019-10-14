@@ -11,12 +11,9 @@
 
 In [3]: net1 = IPv4Network('10.1.1.0/29')
 
-После этого, должны быть доступны переменные address и mask:
-In [5]: net1.address
-Out[5]: '10.1.1.0'
-
-In [6]: net1.mask
-Out[6]: 29
+После этого, должна быть доступна переменная network:
+In [6]: net1.network
+Out[6]: '10.1.1.0/29'
 
 
 Broadcast адрес должен быть записан в атрибуте broadcast:

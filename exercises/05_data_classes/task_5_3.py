@@ -16,8 +16,11 @@ In [4]: b1 = Book('Good Omens', 35, 5)
 In [5]: b1.to_dict()
 Out[5]: {'title': 'Good Omens', 'price': 35.0, 'quantity': 124, 'total': 4340.0}
 
+Обратите внимание, что в словаре не только простые переменные, но и переменные,
+которые созданы через property.
+
 '''
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class Book:
@@ -41,4 +44,3 @@ class Book:
         if not value >= 0:
             raise ValueError('Значение должно быть положительным')
         self._price = float(value)
-
