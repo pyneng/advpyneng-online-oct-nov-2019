@@ -7,22 +7,42 @@ from common_functions import check_class_exists, check_attr_or_method
 
 
 def test_class_created():
-    check_class_exists(task_4_4, 'IPAddress')
+    check_class_exists(task_4_4, 'OrderingMixin')
 
 
-def test_sequence_special_methods_created():
-    ip = task_4_4.IPAddress('10.2.1.1')
-    check_attr_or_method(ip, method='__ge__')
-    check_attr_or_method(ip, method='__ne__')
-    check_attr_or_method(ip, method='__le__')
-    check_attr_or_method(ip, method='__gt__')
+def test_special_methods_created():
+    class IntTest(task_4_4.OrderingMixin):
+        def __init__(self, number):
+            self._number = number
+
+        def __eq__(self, other):
+            return self._number == other._number
+
+        def __lt__(self, other):
+            return self._number < other._number
+
+    int1 = IntTest(5)
+    check_attr_or_method(int1, method='__ge__')
+    check_attr_or_method(int1, method='__ne__')
+    check_attr_or_method(int1, method='__le__')
+    check_attr_or_method(int1, method='__gt__')
 
 
 def test_methods():
-    ip1 = task_4_4.IPAddress('10.10.1.1')
-    ip2 = task_4_4.IPAddress('10.5.3.1')
+    class IntTest(task_4_4.OrderingMixin):
+        def __init__(self, number):
+            self._number = number
 
-    assert ip1 != ip2
-    assert ip1 >= ip2
-    assert ip1 > ip2
-    assert not ip1 < ip2
+        def __eq__(self, other):
+            return self._number == other._number
+
+        def __lt__(self, other):
+            return self._number < other._number
+
+    int1 = IntTest(5)
+    int2 = IntTest(3)
+
+    assert int1 != int2
+    assert int1 >= int2
+    assert int1 > int2
+    assert not int1 < int2

@@ -40,7 +40,7 @@ def test_sequence_mixin_methods_created():
     check_attr_or_method(top, method='update')
 
 
-def test_methods():
+def test_method_len():
     example = {('R1', 'Eth0/0'): ('SW1', 'Eth0/1'),
                ('R2', 'Eth0/0'): ('SW1', 'Eth0/2'),
                ('R3', 'Eth0/0'): ('SW1', 'Eth0/3'),
@@ -51,11 +51,47 @@ def test_methods():
     # test __len__
     assert len(top.topology) == 3
 
+
+def test_method_getitem():
+    example = {('R1', 'Eth0/0'): ('SW1', 'Eth0/1'),
+               ('R2', 'Eth0/0'): ('SW1', 'Eth0/2'),
+               ('R3', 'Eth0/0'): ('SW1', 'Eth0/3'),
+               ('SW1', 'Eth0/1'): ('R1', 'Eth0/0'),
+               ('SW1', 'Eth0/2'): ('R2', 'Eth0/0'),
+               ('SW1', 'Eth0/3'): ('R3', 'Eth0/0')}
+    top = task_4_3a.Topology(example)
+
     # test __getitem__
     assert top[('R1', 'Eth0/0')] == ('SW1', 'Eth0/1')
     assert top[('SW1', 'Eth0/1')] == ('R1', 'Eth0/0')
 
+
+def test_method_setitem():
+    example = {('R1', 'Eth0/0'): ('SW1', 'Eth0/1'),
+               ('R2', 'Eth0/0'): ('SW1', 'Eth0/2'),
+               ('R3', 'Eth0/0'): ('SW1', 'Eth0/3'),
+               ('SW1', 'Eth0/1'): ('R1', 'Eth0/0'),
+               ('SW1', 'Eth0/2'): ('R2', 'Eth0/0'),
+               ('SW1', 'Eth0/3'): ('R3', 'Eth0/0')}
+    top = task_4_3a.Topology(example)
+
+    # test __setitem__
+    top[('SW1', 'Eth0/1')] = ('R1', 'Eth0/0')
+    assert top[('R1', 'Eth0/0')] == ('SW1', 'Eth0/1')
+
+
+def test_method_delitem():
+    example = {('R1', 'Eth0/0'): ('SW1', 'Eth0/1'),
+               ('R2', 'Eth0/0'): ('SW1', 'Eth0/2'),
+               ('R3', 'Eth0/0'): ('SW1', 'Eth0/3'),
+               ('SW1', 'Eth0/1'): ('R1', 'Eth0/0'),
+               ('SW1', 'Eth0/2'): ('R2', 'Eth0/0'),
+               ('SW1', 'Eth0/3'): ('R3', 'Eth0/0')}
+    top = task_4_3a.Topology(example)
+
     # test __detitem__
     del top[('R1', 'Eth0/0')]
     assert len(top.topology) == 2
-
+    # test mirror __detitem__
+    del top[('SW1', 'Eth0/2')]
+    assert len(top.topology) == 1
