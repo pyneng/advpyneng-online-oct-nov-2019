@@ -15,7 +15,8 @@ Out[2]: '*08:07:44.267 UTC Thu Oct 17 2019'
 In [3]: r1('close')
 Соединение закрыто
 
-
+Тест берет значения из словаря device_params в этом файле, поэтому если
+для заданий используются другие адреса/логины, надо заменить их в словаре.
 '''
 
 from netmiko import ConnectHandler
@@ -29,7 +30,7 @@ device_params = {
 }
 
 
-def netmiko_ssh(params_dict):
+def netmiko_ssh(**params_dict):
     ssh = ConnectHandler(**params_dict)
     ssh.enable()
     def send_show_command(command):
@@ -38,6 +39,5 @@ def netmiko_ssh(params_dict):
 
 
 if __name__ == "__main__":
-    r1 = netmiko_ssh(device_params)
+    r1 = netmiko_ssh(**device_params)
     print(r1('sh clock'))
-
