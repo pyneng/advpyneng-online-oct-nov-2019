@@ -13,7 +13,7 @@ def verbose(func):
 
 def verbose_methods(cls):
     for name, value in vars(cls).items():
-        if callable(value):
+        if callable(value) and name not in ('__repr__', '__str__'):
             setattr(cls, name, verbose(value))
     return cls
 
@@ -60,9 +60,7 @@ class BaseSSH:
         self._ssh.close()
 
     def __repr__(self):
-        #if type(self) == type:
-        #    return f"BaseSSH()"
-        return f"BaseSSH(ip={self.ip})"
+        return "BaseSSH(ip={self.ip})"
 
 
 if __name__ == "__main__":
