@@ -2,20 +2,25 @@ import paramiko
 import time
 from functools import wraps
 
+
 def verbose(func):
     print('Декорируем функцию')
     @wraps(func)
     def inner(*args, **kwargs):
+        if isinstance(args[0], BaseSSH):
+            repr_args = ('self',) + args[1:]
         print(f"Вызываю функцию {func.__name__}, "
-              f"args {args}, kwargs {kwargs} ")
+              f"args {repr_args}, kwargs {kwargs} ")
         return func(*args, **kwargs)
     return inner
+
 
 def verbose_methods(cls):
     for name, value in vars(cls).items():
         if callable(value):
             setattr(cls, name, verbose(value))
     return cls
+
 
 @verbose_methods
 class BaseSSH:
@@ -60,8 +65,6 @@ class BaseSSH:
         self._ssh.close()
 
     def __repr__(self):
-        #if type(self) == type:
-        #    return f"BaseSSH()"
         return f"BaseSSH(ip={self.ip})"
 
 
