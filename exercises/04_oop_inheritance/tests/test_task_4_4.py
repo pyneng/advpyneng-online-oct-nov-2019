@@ -65,4 +65,4 @@ def test_methods():
     assert letter1 != letter2
     assert letter1 >= letter2
     assert letter1 > letter2
-    assert letter1 not < letter2
+    assert not letter1 < letter2
