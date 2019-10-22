@@ -46,3 +46,23 @@ def test_methods():
     assert int1 >= int2
     assert int1 > int2
     assert not int1 < int2
+
+
+def test_methods():
+    class LettersTest(task_4_4.OrderingMixin):
+        def __init__(self, letter):
+            self._letter = letter
+
+        def __eq__(self, other):
+            return self._letter == other._letter
+
+        def __lt__(self, other):
+            return self._letter < other._letter
+
+    letter1 = LettersTest('b')
+    letter2 = LettersTest('a')
+
+    assert letter1 != letter2
+    assert letter1 >= letter2
+    assert letter1 > letter2
+    assert letter1 not < letter2
