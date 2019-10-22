@@ -58,7 +58,6 @@ In [15]: net1 = IPv4Network('10.1.1.0/29')
 
 In [16]: net1.allocate('10.1.1.4')
     ...: net1.allocate('10.1.1.6')
-    ...: net1.allocate('10.1.1.8')
     ...:
 
 In [17]: net1.unassigned()
