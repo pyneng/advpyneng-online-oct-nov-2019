@@ -39,3 +39,12 @@ def test_total_order_methods():
     assert not small_num >= big_num
     assert small_num != big_num
 
+    small_num = DoThing(1)
+    big_num = DoThing(100)
+
+    assert not big_num < small_num
+    assert not big_num <= small_num
+    assert big_num > small_num
+    assert big_num >= small_num
+    assert big_num != small_num
+
