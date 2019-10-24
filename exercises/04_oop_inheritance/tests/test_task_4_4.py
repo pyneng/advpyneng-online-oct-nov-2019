@@ -49,20 +49,31 @@ def test_methods():
 
 
 def test_methods():
-    class LettersTest(task_4_4.OrderingMixin):
-        def __init__(self, letter):
-            self._letter = letter
+    class DoThing(task_4_4.OrderingMixin):
+        def __init__(self, num):
+            self.num = num
 
         def __eq__(self, other):
-            return self._letter == other._letter
+            return self.num == other.num
 
         def __lt__(self, other):
-            return self._letter < other._letter
+            return self.num < other.num
 
-    letter1 = LettersTest('b')
-    letter2 = LettersTest('a')
+    small_num = DoThing(1)
+    big_num = DoThing(100)
 
-    assert letter1 != letter2
-    assert letter1 >= letter2
-    assert letter1 > letter2
-    assert not letter1 < letter2
+    assert small_num < big_num
+    assert small_num <= big_num
+    assert not small_num > big_num
+    assert not small_num >= big_num
+    assert small_num != big_num
+
+    small_num = DoThing(1)
+    big_num = DoThing(100)
+
+    assert not big_num < small_num
+    assert not big_num <= small_num
+    assert big_num > small_num
+    assert big_num >= small_num
+    assert big_num != small_num
+
