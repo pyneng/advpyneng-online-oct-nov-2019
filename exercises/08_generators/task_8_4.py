@@ -37,5 +37,5 @@ def send_show_command_to_devices(devices, command, filename, limit=3):
 if __name__ == "__main__":
     command = "sh ip int br"
     with open('devices.yaml') as f:
-        devices = yaml.load(f)
+        devices = yaml.safe_load(f)
     send_show_command_to_devices(devices, command, 'result.txt')
