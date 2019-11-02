@@ -1,9 +1,12 @@
-- ip: 192.168.100.1
+- host: 192.168.100.100
   username: cisco
   password: cisco
-- ip: 192.168.100.2
+- host: 192.168.100.1
   username: cisco
   password: cisco
-- ip: 192.168.100.3
+- host: 192.168.100.2
+  username: cisco
+  password: cisco
+- host: 192.168.100.3
   username: cisco
   password: cisco
