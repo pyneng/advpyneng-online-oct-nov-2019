@@ -1,3 +1,5 @@
+#export PYTHONWARNINGS="ignore"
+
 ########## 4 устройства
 
 $ time python example_10_netdev_test.py
