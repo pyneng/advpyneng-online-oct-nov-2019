@@ -31,7 +31,7 @@ R1(config-if)#ip address 10.5.5.5 255.255.255.255
 R1(config-if)#end
 R1#
 
-In [5]: asyncio.run(send_config_commands(*r1, config_commands=commands))
+In [5]: asyncio.run(send_config_commands(**r1, config_commands=commands))
 Out[5]: 'conf t\r\nEnter configuration commands, one per line.  End with CNTL/Z.\r\nR1(config)#interface loopback55\r\nR1(config-if)#ip address 10.5.5.5 255.255.255.255\r\nR1(config-if)#end\r\nR1#'
 
 
