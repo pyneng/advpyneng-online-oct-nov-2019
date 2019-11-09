@@ -19,19 +19,18 @@ async def connect_ssh(device, command):
         print(f'Отмена операции {device["host"]}')
 
 
-async def send_command_to_devices(devices, command):
+async def send_command_to_devices(devices, command, workers=2):
+    semaphore = asyncio.Semaphore(workers)
     try:
-        coroutines = map(connect_ssh_with_semaphore, devices, repeat(command))
-        #coroutines = map(connect_ssh, devices, repeat(command))
+        coroutines = [connect_ssh_with_semaphore(semaphore, device, command)
+                      for device in devices]
         result = await asyncio.gather(*coroutines)
         return result
     except asyncio.CancelledError as e:
         print('Отмена операции')
 
 
-semaphore = asyncio.Semaphore(2)
-
-async def connect_ssh_with_semaphore(*args, **kwargs):
+async def connect_ssh_with_semaphore(semaphore, *args, **kwargs):
     async with semaphore:
         return await connect_ssh(*args, **kwargs)
 
@@ -39,11 +38,7 @@ async def connect_ssh_with_semaphore(*args, **kwargs):
 def main():
     with open('devices_netmiko.yaml') as f:
         devices = yaml.safe_load(f)
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(send_command_to_devices(devices, 'sh clock'))
-    finally:
-        loop.close()
+    asyncio.run(send_command_to_devices(devices, 'sh clock'))
 
 
 if __name__ == "__main__":
