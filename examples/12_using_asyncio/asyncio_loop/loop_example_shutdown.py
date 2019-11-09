@@ -28,6 +28,15 @@ async def send_command_to_devices(devices, command):
         print('Отмена операции')
 
 
+async def shutdown():
+    tasks = [t for t in asyncio.Task.all_tasks()
+             if t is not asyncio.current_task()]
+
+    [t.cancel() for t in tasks]
+    data = await asyncio.gather(*tasks, return_exceptions=True)
+    return data
+
+
 def main():
     with open('devices_netmiko.yaml') as f:
         devices = yaml.safe_load(f)
@@ -39,11 +48,8 @@ def main():
     except KeyboardInterrupt:
         print('Starting shutdown')
     finally:
-        tasks = asyncio.Task.all_tasks()
-        for t in tasks:
-            t.cancel()
-        data = loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
-        print(data)
+        result = loop.run_until_complete(shutdown())
+        print(result)
     loop.close()
 
 
