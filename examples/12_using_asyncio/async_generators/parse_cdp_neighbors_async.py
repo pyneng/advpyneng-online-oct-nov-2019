@@ -12,10 +12,15 @@ async def get_one_neighbor(filename):
             while not 'Device ID' in line:
                 line = await f.readline()
             neighbor = line
-            async for line in f:
-                if '----------' in line:
+            #async for line in f:
+            while True:
+                try:
+                    line = await f.__anext__()
+                    if '----------' in line:
+                        break
+                    neighbor += line
+                except StopAsyncIteration:
                     break
-                neighbor += line
             yield neighbor
             line = await f.readline()
             if not line:
@@ -38,10 +43,11 @@ def parse_neighbor(output):
 
 
 async def main():
-    cdp_filename = 'sh_cdp_neighbors_detail.txt'
+    cdp_filename = 'sh_cdp_neighbors_detail_sw1.txt'
     async for neighbor in get_one_neighbor(cdp_filename):
         print(parse_neighbor(neighbor))
 
 
 if __name__ == "__main__":
     asyncio.run(main())
+

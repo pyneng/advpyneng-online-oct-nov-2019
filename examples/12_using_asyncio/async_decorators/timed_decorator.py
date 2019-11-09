@@ -18,6 +18,8 @@ def timecode(function):
     return wrapper
 
 
+#send_show_command = timecode(send_show_command)
+
 @timecode
 def send_show_command(params, command):
     with ConnectHandler(**params) as ssh:

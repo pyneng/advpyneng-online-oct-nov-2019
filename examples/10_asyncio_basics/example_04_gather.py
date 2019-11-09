@@ -13,6 +13,9 @@ async def connect_ssh(ip, command):
 async def send_command_to_devices(ip_list, command):
     coroutines = map(connect_ssh, ip_list, repeat(command))
     result = await asyncio.gather(*coroutines)
+
+    tasks = [asyncio.create_task(connect_ssh(ip, command)) for ip in ip_list]
+    results = [await task for task in tasks]
     return result
 
 

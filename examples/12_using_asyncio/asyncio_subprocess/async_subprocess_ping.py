@@ -12,6 +12,14 @@ async def ping(ip):
     ip_is_reachable = reply.returncode == 0
     return ip_is_reachable
 
+async def ping_ip_list(ip_list):
+    coroutines = [ping(ip) for ip in ip_list]
+    result = await asyncio.gather(*coroutines)
+    return result
+
 
 if __name__ == "__main__":
-    asyncio.run(ping('8.8.8.8'))
+    ip_list = ['192.168.100.1', '192.168.100.2', '192.168.100.3', '192.168.100.11']
+    results = asyncio.run(ping_ip_list(ip_list))
+    print(results)
+

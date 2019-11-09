@@ -33,6 +33,6 @@ def parse_neighbor(output):
     return result
 
 if __name__ == "__main__":
-    data = get_one_neighbor('sh_cdp_neighbors_detail.txt')
+    data = get_one_neighbor('sh_cdp_neighbors_detail_sw1.txt')
     for n in data:
         pprint(parse_neighbor(n), width=120)
