@@ -1,10 +1,10 @@
+# source https://www.pythonsheets.com/appendix/python-asyncio.html
 import weakref
 import asyncio
 Future = asyncio.futures.Future
 
 # WeakSet containing all alive tasks.
 _all_tasks = weakref.WeakSet()
-
 
 def _register_task(task):
     """Register a new task in asyncio as executed by loop."""
@@ -19,11 +19,11 @@ class Task(Future):
         print(f'Task {self.name} __init__')
         super().__init__(loop=loop)
         self._coro = coro
-        self._loop.call_soon(self.__step)
+        self._loop.call_soon(self._step)
         _register_task(self)
 
-    def __step(self, val=None, exc=None):
-        print(f'Task {self.name} __step')
+    def _step(self, val=None, exc=None):
+        print(f'Task {self.name} _step')
         try:
             if exc:
                 f = self._coro.throw(exc)
@@ -42,26 +42,10 @@ class Task(Future):
         try:
             res = fut.result()
         except Exception as e:
-            self.__step(None, e)
+            self._step(None, e)
         else:
-            self.__step(res, None)
+            self._step(res, None)
 
-async def coro1():
-    print("Start")
-    await Task(asyncio.sleep(3), name='sleep coro1')
-    print("Working")
-    await asyncio.sleep(1)
-    print("End")
+    def __repr__(self):
+        return f"Task({self.name})"
 
-
-async def coro2():
-    await Task(asyncio.sleep(3), name='sleep coro2')
-    print("Hello Bar")
-
-
-async def main():
-    task1 = Task(coro1(), name='coro1')
-    #task2 = Task(coro2(), name='coro2')
-    await asyncio.gather(task1)
-
-asyncio.run(main())
