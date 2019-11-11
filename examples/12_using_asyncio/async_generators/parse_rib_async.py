@@ -53,3 +53,9 @@ if __name__ == "__main__":
     #nexthop_45_mask_22 = filter_prefix_mask(nexthop_45, 22)
     #for _ in range(3):
     #    print(next(nexthop_45_mask_22))
+
+    # при использовании asyncio.run появляется исключение, если генератор прерывается,
+    # когда он не дошел до конца
+    # пофиксили в последних версиях 3.7/3.8
+    # https://bugs.python.org/issue38013
+
