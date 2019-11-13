@@ -16,7 +16,7 @@ async def open_csv(filename):
         headers = list(csv.reader([headers]))[0]
         async for index, line in aenumerate(f):
             print(index)
-            yield dict(list(csv.dictreader([line], fieldnames=headers))[0])
+            yield dict(list(csv.DictReader([line], fieldnames=headers))[0])
 
 '''
 
@@ -32,7 +32,7 @@ async def open_csv(filename):
         index = 0
         async for line in f:
             print(index)
-            yield dict(list(csv.dictreader([line], fieldnames=headers))[0])
+            yield dict(list(csv.DictReader([line], fieldnames=headers))[0])
             index += 1
 
 
