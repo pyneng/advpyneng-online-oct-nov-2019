@@ -21,26 +21,18 @@ console.setFormatter(logging.Formatter(
 logger.addHandler(console)
 
 
-start_msg = '===> Connection to: {} function {}'
-received_msg = '<=== Result from: {} function {}'
-
+start_msg = '===> Connection to: {}'
 
 
 def connect_ssh_sync(device, command):
-    logger.info(start_msg.format(device['host'], 'SHOW'))
+    logger.info(start_msg.format(device['host']))
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         result = ssh.send_command(command)
     return result
 
-def connect_ssh_sync_config(device, commands):
-    logger.info(start_msg.format(device['host'], 'CONFIG'))
-    with ConnectHandler(**device) as ssh:
-        ssh.enable()
-        result = ssh.send_config_set(commands)
-    return result
 
-async def send_show_command_to_devices(devices, command, executor=None):
+async def send_command_to_devices(devices, command, executor=None):
     tasks = []
     for device in devices:
         loop = asyncio.get_running_loop()
@@ -48,19 +40,11 @@ async def send_show_command_to_devices(devices, command, executor=None):
     result = await asyncio.gather(*tasks)
     return result
 
-async def send_cfg_command_to_devices(devices, command, executor=None):
-    tasks = []
-    for device in devices:
-        loop = asyncio.get_running_loop()
-        tasks.append(loop.run_in_executor(executor, connect_ssh_sync_config, device, command))
-    result = await asyncio.gather(*tasks)
-    return result
 
 async def main():
-    #executor = ThreadPoolExecutor(max_workers=4)
-    result1 = await send_show_command_to_devices(devices, 'sh run | i hostname')
+    result1 = await send_command_to_devices(devices, 'sh run | i hostname')
     pprint(result1)
-    result2 = await send_cfg_command_to_devices(devices, 'logging 1.1.1.1')
+    result2 = await send_command_to_devices(devices, 'sh run | i ospf')
     pprint(result2)
 
 

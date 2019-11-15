@@ -32,7 +32,7 @@ def connect_ssh_sync(device, command):
     return result
 
 
-async def send_command_to_devices(devices, command, executor):
+async def send_command_to_devices(devices, command, executor=None):
     tasks = []
     for device in devices:
         loop = asyncio.get_running_loop()
