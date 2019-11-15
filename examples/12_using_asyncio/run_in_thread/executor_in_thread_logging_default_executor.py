@@ -16,25 +16,25 @@ logger.setLevel(logging.DEBUG)
 console = logging.StreamHandler()
 console.setLevel(logging.DEBUG)
 console.setFormatter(logging.Formatter(
-    '%(asctime)s - THREAD %(thread)d -%(name)s - %(levelname)s - %(message)s', datefmt='%H:%M:%S'))
+    '%(asctime)s - THREAD %(thread)d - %(levelname)s - %(message)s', datefmt='%H:%M:%S'))
 
 logger.addHandler(console)
 
 
-start_msg = '===> {} Connection to device: {} function {}'
-received_msg = '<=== {} Received result from device: {} function {}'
+start_msg = '===> Connection to: {} function {}'
+received_msg = '<=== Result from: {} function {}'
 
 
 
 def connect_ssh_sync(device, command):
-    logger.info(start_msg.format(datetime.now().time(), device['host'], 'SHOW'))
+    logger.info(start_msg.format(device['host'], 'SHOW'))
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         result = ssh.send_command(command)
     return result
 
 def connect_ssh_sync_config(device, commands):
-    logger.info(start_msg.format(datetime.now().time(), device['host'], 'CONFIG'))
+    logger.info(start_msg.format(device['host'], 'CONFIG'))
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         result = ssh.send_config_set(commands)
