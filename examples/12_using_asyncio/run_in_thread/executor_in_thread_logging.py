@@ -21,33 +21,37 @@ console.setFormatter(logging.Formatter(
 logger.addHandler(console)
 
 
-start_msg = '===> Connection to: {}'
+start_msg = '===> Connection to: {}, function {}'
+received_msg = '<=== Result from: {}, function {}'
 
 
-def connect_ssh_sync(device, command):
-    logger.info(start_msg.format(device['host']))
+
+def connect_ssh_sync(device, command, name):
+    logger.info(start_msg.format(device['host'], name))
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         result = ssh.send_command(command)
+        logger.info(received_msg.format(device['host'], name))
     return result
 
 
-async def send_command_to_devices(devices, command, executor=None):
+async def send_command_to_devices(devices, command, name, executor=None):
     tasks = []
     for device in devices:
         loop = asyncio.get_running_loop()
-        tasks.append(loop.run_in_executor(executor, connect_ssh_sync, device, command))
+        tasks.append(loop.run_in_executor(executor,
+                                          connect_ssh_sync, device, command, name))
     result = await asyncio.gather(*tasks)
     return result
 
 
 async def main():
     executor1 = ThreadPoolExecutor(max_workers=4)
-    result1 = await send_command_to_devices(devices, 'sh run | i hostname', executor1)
-    pprint(result1)
+    coro1 = send_command_to_devices(devices, 'sh run | i hostname', 'RUN1', executor1)
     executor2 = ThreadPoolExecutor(max_workers=2)
-    result2 = await send_command_to_devices(devices, 'sh run | i ospf', executor2)
-    pprint(result2)
+    coro2 = send_command_to_devices(devices, 'sh run | i ospf', 'RUN2', executor2)
+    result = await asyncio.gather(coro1, coro2)
+    pprint(result)
 
 
 if __name__ == "__main__":
