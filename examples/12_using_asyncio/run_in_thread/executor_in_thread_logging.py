@@ -16,18 +16,16 @@ logger.setLevel(logging.DEBUG)
 console = logging.StreamHandler()
 console.setLevel(logging.DEBUG)
 console.setFormatter(logging.Formatter(
-    '%(asctime)s - THREAD %(thread)d -%(name)s - %(levelname)s - %(message)s', datefmt='%H:%M:%S'))
+    '%(asctime)s - THREAD %(thread)d - %(levelname)s - %(message)s', datefmt='%H:%M:%S'))
 
 logger.addHandler(console)
 
 
-start_msg = '===> {} Connection to device: {}'
-received_msg = '<=== {} Received result from device: {}'
-
+start_msg = '===> Connection to: {}'
 
 
 def connect_ssh_sync(device, command):
-    logger.info(start_msg.format(datetime.now().time(), device['host']))
+    logger.info(start_msg.format(device['host']))
     with ConnectHandler(**device) as ssh:
         ssh.enable()
         result = ssh.send_command(command)
@@ -42,11 +40,13 @@ async def send_command_to_devices(devices, command, executor):
     result = await asyncio.gather(*tasks)
     return result
 
+
 async def main():
-    executor = ThreadPoolExecutor(max_workers=4)
-    result1 = await send_command_to_devices(devices, 'sh run | i hostname', executor)
+    executor1 = ThreadPoolExecutor(max_workers=4)
+    result1 = await send_command_to_devices(devices, 'sh run | i hostname', executor1)
     pprint(result1)
-    result2 = await send_command_to_devices(devices, 'sh run | i ospf', executor)
+    executor2 = ThreadPoolExecutor(max_workers=2)
+    result2 = await send_command_to_devices(devices, 'sh run | i ospf', executor2)
     pprint(result2)
 
 
