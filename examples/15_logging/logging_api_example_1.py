@@ -1,6 +1,7 @@
 import logging
 
 mylogger = logging.getLogger('My Script')
+#mylogger = logging.getLogger(__name__)
 
 ## messages
 mylogger.debug('Сообщение уровня debug')

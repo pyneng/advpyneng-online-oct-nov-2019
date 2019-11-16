@@ -1,7 +1,7 @@
 import sys
 import logging
 
-logger = logging.getLogger('My Script')
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 console = logging.StreamHandler(sys.stdout)

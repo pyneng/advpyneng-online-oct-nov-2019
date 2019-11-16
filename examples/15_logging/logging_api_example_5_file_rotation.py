@@ -1,7 +1,7 @@
 import logging
 import logging.handlers
 
-logger = logging.getLogger('My Script')
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 logfile = logging.handlers.RotatingFileHandler(
