@@ -42,5 +42,9 @@ def test_ssh(connect_all):
 
 def test_ospf(connect_all):
     result = connect_all.send_command('sh ip ospf')
-    assert 'Routing Process' in result
+    assert 'Routing Process' in result, "Должен быть настроен OSPF"
 
+
+def test_loopback_0(connect_all):
+    result = connect_all.send_command('sh ip int br | include up +up')
+    assert 'Loopback0' in result, "Должен быть настроен Loopback0"
