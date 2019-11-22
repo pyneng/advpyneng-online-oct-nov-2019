@@ -1,6 +1,6 @@
 import paramiko
 import time
-from typing import Union, List
+from typing import Union, List, Iterable
 
 
 class BaseSSH:
@@ -35,6 +35,7 @@ class BaseSSH:
         return result
 
     def send_config_commands(self, commands: Union[str, List[str]]) -> str:
+    #def send_config_commands(self, commands: Union[str, Iterable[str]]) -> str:
         if isinstance(commands, str):
             commands = [commands]
         for command in commands:
