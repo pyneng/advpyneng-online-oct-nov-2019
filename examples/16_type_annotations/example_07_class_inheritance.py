@@ -8,6 +8,7 @@ class BaseSSH:
         self.ip = ip
         self.username = username
         self.password = password
+        ####
 
     def send_config_commands(self, commands: Union[str, List[str]]) -> str:
         if isinstance(commands, str):
@@ -18,9 +19,15 @@ class BaseSSH:
 
 
 class CiscoSSH(BaseSSH):
-    def __init__(self, ip: str, username: str, password: str,
-                 enable_password: str = None, disable_paging: bool = True) -> None:
+    def __init__(self,
+                 ip: str,
+                 username: str,
+                 password: str,
+                 secret: str,
+                 disable_paging: bool = True,
+                ) -> None:
         super().__init__(ip, username, password)
 
-    def send_config_commands(self, commands: List[str]) -> str:
+    def send_config_commands(self, commands: Union[str, List[str]]) -> str:
+        #send....(conf t)
         return 'result'

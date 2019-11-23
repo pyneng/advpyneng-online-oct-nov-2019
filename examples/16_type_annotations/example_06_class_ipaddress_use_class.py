@@ -11,3 +11,10 @@ class IPAddress:
         sum_ip_str = str(ipaddress.ip_address(ip_int + other))
         return IPAddress(sum_ip_str)
 
+
+class IPv4Network:
+    def __init__(self, network: str):
+        self.network = network
+
+    def hosts(self) -> List[IPAddress]:
+        return list(ipaddress.ip_network(self.network).hosts())

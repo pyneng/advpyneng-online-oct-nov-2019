@@ -39,9 +39,7 @@ class BaseSSH:
         return result
 
     def send_config_commands(self,
-                             commands: Union[str, List[str]]
-                             ) -> str:
-    #def send_config_commands(self, commands: Union[str, Iterable[str]]) -> str:
+                             commands: Union[str, Iterable[str]]) -> str:
         if isinstance(commands, str):
             commands = [commands]
         for command in commands:
@@ -58,6 +56,6 @@ if __name__ == "__main__":
     print(r1.send_show_command("cisco"))
     print(
         r1.send_config_commands(
-            ["conf t", "int loopback 33", "ip address 3.3.3.3 255.255.255.255", "end"]
+            ("conf t", "int loopback 33", "ip address 3.3.3.3 255.255.255.255", "end")
         )
     )

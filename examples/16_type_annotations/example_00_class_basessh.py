@@ -1,9 +1,10 @@
 import paramiko
 import time
+from typing import List
 
 
 class BaseSSH:
-    def __init__(self, ip, username, password):
+    def __init__(self, ip: str, username: str, password: str) -> None:
         self.ip = ip
         self.username = username
         self.password = password
@@ -24,16 +25,13 @@ class BaseSSH:
         time.sleep(1)
         self._ssh.recv(self._MAX_READ)
 
-    def close(self):
-        self._ssh.close()
-
-    def send_show_command(self, command):
+    def send_show_command(self, command: str) -> str:
         self._ssh.send(command + "\n")
         time.sleep(2)
         result = self._ssh.recv(self._MAX_READ).decode("ascii")
         return result
 
-    def send_config_commands(self, commands):
+    def send_config_commands(self, commands: List[str]):
         for command in commands:
             self._ssh.send(command + "\n")
             time.sleep(0.5)
@@ -41,13 +39,3 @@ class BaseSSH:
         return result
 
 
-if __name__ == "__main__":
-    r1 = BaseSSH("192.168.100.1", "cisco", "cisco")
-    print(r1.send_show_command("sh ip int br"))
-    print(r1.send_show_command("enable"))
-    print(r1.send_show_command("cisco"))
-    print(
-        r1.send_config_commands(
-            ["conf t", "int loopback 33", "ip address 3.3.3.3 255.255.255.255", "end"]
-        )
-    )

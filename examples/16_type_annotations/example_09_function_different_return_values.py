@@ -5,8 +5,9 @@ from typing import Dict, Union, List
 
 
 def send_and_parse_show_command(device_dict: Dict[str, str],
-                                command: str, index_file: str = "index",
-                                templ_path: str = "templates"
+                                command: str,
+                                index_file: str = 'index',
+                                templ_path: str = 'templates',
                                ) -> Union[str, List[Dict[str, str]]]:
     attributes = {"Command": command, "Vendor": device_dict["device_type"]}
     with ConnectHandler(**device_dict) as ssh:
@@ -32,5 +33,5 @@ if __name__ == "__main__":
         "secret": "cisco",
     }
     result = send_and_parse_show_command(device_params, "sh ip int br")
-    # result = send_and_parse_show_command(device_params, 'sh ip route ospf')
+    #result = send_and_parse_show_command(device_params, 'sh ip route ospf')
     pprint(result, width=100)
