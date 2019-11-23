@@ -1,14 +1,9 @@
 import paramiko
 import time
-from typing import Union, List, Iterable
 
 
 class BaseSSH:
-    def __init__(self,
-                 ip: str,
-                 username: str,
-                 password: str
-                 ) -> None:
+    def __init__(self, ip, username, password):
         self.ip = ip
         self.username = username
         self.password = password
@@ -29,21 +24,16 @@ class BaseSSH:
         time.sleep(1)
         self._ssh.recv(self._MAX_READ)
 
-    def close(self) -> None:
+    def close(self):
         self._ssh.close()
 
-    def send_show_command(self, command: str) -> str:
+    def send_show_command(self, command):
         self._ssh.send(command + "\n")
         time.sleep(2)
         result = self._ssh.recv(self._MAX_READ).decode("ascii")
         return result
 
-    def send_config_commands(self,
-                             commands: Union[str, List[str]]
-                             ) -> str:
-    #def send_config_commands(self, commands: Union[str, Iterable[str]]) -> str:
-        if isinstance(commands, str):
-            commands = [commands]
+    def send_config_commands(self, commands):
         for command in commands:
             self._ssh.send(command + "\n")
             time.sleep(0.5)
