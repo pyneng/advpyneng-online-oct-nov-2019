@@ -32,7 +32,7 @@ def ping_ip(ip):
 
 
 def test_ping_ip(one_device_params):
-    assert ping_ip(one_device_params['host']), f"IP адрес {ip} должен пинговаться"
+    assert ping_ip(one_device_params['host']), f"IP адрес {one_device_params['host']} должен пинговаться"
 
 
 def test_ssh(connect_all):
