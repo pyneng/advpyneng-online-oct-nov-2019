@@ -26,7 +26,7 @@ def send_show(device_dict, command):
     return result
 
 
-def send_command_to_devices(devices, command, max_workers):
+def send_command_to_devices(devices, command, max_workers=3):
     data = {}
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         result = executor.map(send_show, devices, repeat(command))
