@@ -8,7 +8,6 @@ import asyncssh
 async def connect_ssh(ip, command, username='cisco', password='cisco'):
     print(f'Подключаюсь к {ip}')
     async with asyncssh.connect(ip, username=username, password=password) as ssh:
-        ssh_coroutine = asyncssh.connect(ip, username=username, password=password)
         # так как нет встроенного таймаута, запускаем через wait_for
         ssh = await asyncio.wait_for(ssh_coroutine, timeout=10)
         writer, reader, stderr = await ssh.open_session(
